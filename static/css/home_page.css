@@ -1,0 +1,17 @@
+body {
+    background: #000;
+    color: white;
+}
+
+.searching_box {
+    display: flex;
+    justify-content: center;
+    margin-top: 21%;
+}
+
+.text_box {
+    display: block;
+    width: 398px;
+    height: 28px;
+    margin-left: 5px;
+}

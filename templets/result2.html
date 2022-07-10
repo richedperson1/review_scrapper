@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename = 'css/result2_page.css' )}}">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="table_class">
+
+        <table class="table1">
+            <tr class="table1_tr1">
+                <th> {{outputs.title_of_page[0]}} </th>
+            </tr>
+            <tr class="table1_tr1">
+                <th> Price : {{outputs.title_of_page[1]}}</th>
+            </tr>
+        </table>
+        <table class="table2">
+            <tr>
+                <th class="headline"> Headline </th>
+                <th class="rating"> Rating </th>
+                <th class="comment"> Comments </th>
+                <th class="purchase"> Purchase Date </th>
+            </tr>
+            {% for i in range(0,outputs.total-1) %}
+            <tr>
+                <td class="headline">
+                    {{outputs.All_info[0][i]}}
+                </td>
+
+                <td class="rating">
+                    {{outputs.All_info[1][i]}}
+                </td>
+
+                <td class="comment">
+                    {{outputs.All_info[2][i]}}
+                </td>
+
+                <td class="purchase">
+                    {{outputs.All_info[3][i]}}
+                </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
