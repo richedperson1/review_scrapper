@@ -10,9 +10,9 @@ class fetching_info:
     search_obj: str
     list_of_element: str
     flipkart = "https://www.flipkart.com/search?q="
-    client = pymongo.MongoClient(
-        "mongodb+srv://mongodb:ru15070610@cluster0.4olre.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-    db = client.test
+    # client = pymongo.MongoClient(
+    #     "mongodb+srv://mongodb:ru15070610@cluster0.4olre.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+    # db = client.test
 
     def search_obj_url(self, index=0) -> str:
         """
@@ -22,11 +22,12 @@ class fetching_info:
         """
         try:
             flipkart_link = self.flipkart+self.search_obj.replace(",", "")
-            uClient = uReq(flipkart_link).read()
-
+            uClien = uReq(flipkart_link)
+            uClient = uClien.read()
+            uClien.close()
             flipkart_soup = bs(uClient, "html.parser")
         except Exception as e:
-            print("Error at url side ")
+            print("Error at url side search_obj_url ")
             print(e)
 
         try:
@@ -48,11 +49,12 @@ class fetching_info:
         """
         try:
             single_search_obj_url = self.search_obj_url()
-            single_uclient = uReq(single_search_obj_url).read()
+            single_uclient1 = uReq(single_search_obj_url)
+            single_uclient = single_uclient1.read()
             flipkart_soup = bs(single_uclient, "html.parser")
-
+            single_uclient1.close()
         except Exception as ghe:
-            print("Error at url side ")
+            print("Error at url side getting_info_of_one")
             print(ghe)
 
         try:
@@ -80,14 +82,16 @@ class fetching_info:
         """
         try:
             single_search_obj_url = self.search_obj_url()
-            single_uclient = uReq(single_search_obj_url).read()
+            single_uclient1 = uReq(single_search_obj_url)
+            single_uclient = single_uclient1.read()
             flipkart_soup = bs(single_uclient, "html.parser")
+            single_uclient1.close()
             self.getting_info_of_one()
             self.dist2 = {"describe_product_short": self.heading_of_obj,
                           "price_of_product": self.price_of_product}
 
         except Exception as gre:
-            print("Error at url side ")
+            print("Error at url side getting_info_of_all")
             print(gre)
             # return gre
         try:
@@ -122,9 +126,9 @@ class fetching_info:
                 update_one = dict(self.dist2, **self.dist1)
                 data_stored_mongodb.append(update_one)
 
-            connection = self.client["review_scapper_data"]
-            collection = connection['flipkart_data']
-            collection.insert_many(data_stored_mongodb)
+            # connection = self.client["review_scapper_data"]
+            # collection = connection['flipkart_data']
+            # collection.insert_many(data_stored_mongodb)
             return [heading_of_comments, ratings, comments, purchase_time]
 
         except Exception as gre1:
